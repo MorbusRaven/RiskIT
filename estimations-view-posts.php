@@ -7,9 +7,9 @@ if (isset($_GET['post_id'])) {
 
 $id = $_GET['post_id'];
 
-$estpost = $conn->query("SELECT * FROM estimations_posts WHERE post_id = $id");
+$estimations_posts = $conn->query("SELECT * FROM roundtable WHERE post_id = $id");
 
-$post_data = $estpost->fetch_assoc();
+$post_data = $estimations_posts->fetch_assoc();
 
 } else {
 
@@ -27,7 +27,7 @@ header("Location: index.php");
 <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
 
 
-<title><?php echo $post_data['fullname'] ?>Status Update</title>
+<title><?php echo $post_data['post_name'] ?>Status Update</title>
 
 <link rel="stylesheet" type="text/css" href="public_styling.css">
 
@@ -39,7 +39,7 @@ header("Location: index.php");
 <?php include( ROOT_PATH . '/includes/navbar.php') ?>
 <div class="body">
 
-<a href="RoundTable.php">Estimations</a> | <b><?php echo $post_data['username'] ?></b>
+<a href="RoundTable.php">Estimations</a> | <b><?php echo $post_data['post_name'] ?></b>
 
 </div>
 
@@ -57,15 +57,15 @@ header("Location: index.php");
 
 <?php
 
-$estcomments = $conn->query("SELECT * FROM estcomments WHERE post_id = $id");
+$estimations_comments = $conn->query("SELECT * FROM estimations_comments WHERE post_id = $id");
 
 ?>
 
-<b><?php echo $estcomments->num_rows ?></b> Total comments<br><br>
+<b><?php echo $estimations_comments->num_rows ?></b> Total comments<br><br>
 
 <?php
 
-while ($comment_data = $estcomments->fetch_assoc()) { ?>
+while ($comment_data = $estimations_comments->fetch_assoc()) { ?>
 
 <div class="post-panel">
 
@@ -87,7 +87,7 @@ while ($comment_data = $estcomments->fetch_assoc()) { ?>
 
 ?>
 
-<form method="post" action="comment-action.php?post_id=<?php echo $id ?>">
+<form method="post" action="estimations-comment-action.php?post_id=<?php echo $id ?>">
 
 <label>Quick Comment:</label><br>
 

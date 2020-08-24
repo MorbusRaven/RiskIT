@@ -6,13 +6,13 @@ if (isset($_POST['post'])) {
 
 $post_msg = $_POST['post_msg'];
 
-$username = $_GET['username'];
+$post_name = $_GET['post_name'];
 
-$post = $conn->query("INSERT INTO mitigationstratposts (username, post_msg) VALUES ('$username', '$post_msg')");
+$post = $conn->query("INSERT INTO mitigation_strat_posts (post_name, post_msg) VALUES ('$post_name', '$post_msg')");
 
 if ($post) {
 
-header("Location: mitigationStrategy.php?post_action=posted");
+header("Location: mitigationStrategy.php?mitigationstrat-post-action=posted");
 
 } else {
 

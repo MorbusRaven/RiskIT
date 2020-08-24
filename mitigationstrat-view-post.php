@@ -7,9 +7,9 @@ if (isset($_GET['post_id'])) {
 
 $id = $_GET['post_id'];
 
-$mitspost = $conn->query("SELECT * FROM mitigationstratposts WHERE post_id = $id");
+$mitigation_strat_posts = $conn->query("SELECT * FROM mitigation_strat_posts WHERE post_id = $id");
 
-$post_data = $mitspost->fetch_assoc();
+$post_data = $mitigation_strat_posts->fetch_assoc();
 
 } else {
 
@@ -27,7 +27,7 @@ header("Location: index.php");
 <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
 
 
-<title><?php echo $post_data['fullname'] ?>Status Update</title>
+<title><?php echo $post_data['post_name'] ?>Status Update</title>
 
 <link rel="stylesheet" type="text/css" href="public_styling.css">
 
@@ -39,7 +39,7 @@ header("Location: index.php");
 <?php include( ROOT_PATH . '/includes/navbar.php') ?>
 <div class="body">
 
-<a href="mitigationStrategy.php">Mitigation Strategies</a> | <b><?php echo $post_data['username'] ?></b>
+<a href="mitigationStrategy.php">Mitigation Strategies</a> | <b><?php echo $post_data['post_name'] ?></b>
 
 </div>
 
@@ -57,21 +57,21 @@ header("Location: index.php");
 
 <?php
 
-$mitscomments = $conn->query("SELECT * FROM mitigationstratcomments WHERE post_id = $id");
+$mitigation_strat_comments = $conn->query("SELECT * FROM mitigation_strat_comments WHERE post_id = $id");
 
 ?>
 
-<b><?php echo $mitscomments->num_rows ?></b> Total comments<br><br>
+<b><?php echo $mitigation_strat_comments->num_rows ?></b> Total comments<br><br>
 
 <?php
 
-while ($comment_data = $mitscomments->fetch_assoc()) { ?>
+while ($comment_data = $mitigation_strat_comments->fetch_assoc()) { ?>
 
 <div class="post-panel">
 
 <div class="post-header">
 
-<b><?php echo $comment_data['username'] ?></b>
+<b><?php echo $comment_data['user_name'] ?></b>
 
 </div>
 
@@ -87,7 +87,7 @@ while ($comment_data = $mitscomments->fetch_assoc()) { ?>
 
 ?>
 
-<form method="post" action="comment-action.php?post_id=<?php echo $id ?>">
+<form method="post" action="mitigationstrat-comment-action.php?post_id=<?php echo $id ?>">
 
 <label>Quick Comment:</label><br>
 
