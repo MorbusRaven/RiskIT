@@ -1,17 +1,22 @@
 <?php 
+	// ini_set('error_reporting', E_ALL);
+	// error_reporting(E_ALL);
+	// error_reporting(-1);
+
 	// variable declaration
 	$projectname = "";
 	$clientname = "";
-	$projectname    = "";
+	$description    = "";
 	$errors = array(); 
 
+	$conn = mysqli_connect("localhost", "root", "", "riskit");
+
 	// REGISTER project
-	if (isset($_POST['project_create'])) {
+	if (isset($_GET['projectname'])) {
 		// receive all input values from the form
-		$projectname = esc($_POST['projectname']);
-		$projectname = esc($_POST['projectname']);
-		$clientname = esc($_POST['clientname']);
-		
+		$projectname = esc($_GET['projectname']);
+		$clientname = esc($_GET['clientname']);
+		$description = esc($_GET['description']);
 
 		// Ensure that no project is registered twice. 
 		// the clientname and projectnames should be unique
@@ -21,16 +26,17 @@
 		$project = mysqli_fetch_assoc($result);
 		
 		 // if project exists
-			if ($project['projectname'] === $projectname) {
-			  array_push($errors, "Project name already exists");
-			}
-	
-		
+		// if ($project['projectname'] === $projectname) {
+		if ($project['projectname'] === $projectname) {
+			array_push($errors, "Project name already exists");
+		}
+
 		// register project if there are no errors in the form
 		if (count($errors) == 0) {
+
 			$query = "INSERT INTO projects (projectname, clientname, description, created_at)
-					  VALUES('projectname', 'clientname', 'description', now(), )";
-			mysqli_query($conn, $query);
+					  VALUES('$projectname', '$clientname', '$description', now())";
+			$result2 = mysqli_query($conn, $query);
 
 			// get id of created project
 			$reg_project_id = mysqli_insert_id($conn); 
@@ -38,40 +44,40 @@
 			// put logged in project into session array
 			$_SESSION['project'] = getProjectById($reg_project_id);
 
+			$_SESSION["project"] = true;
+			$_SESSION["id"] = $id;
+			$_SESSION["projectname"] = $projectname;
+
+			echo $result2;
 			
-	
-
-	
-
-		$_SESSION["project"] = true;
-        $_SESSION["id"] = $id;
-        $_SESSION["projectname"] = $projectname;
+		}
         
+		// if (empty($errors)) {
 		
-		if (empty($errors)) {
-		
-			$sql = "SELECT * FROM project WHERE projectname='$projectname'  LIMIT 1";
+		// 	$sql = "SELECT * FROM project WHERE projectname='$projectname'  LIMIT 1";
 
-			$result = mysqli_query($conn, $sql);
-			if (mysqli_num_rows($result) > 0) {
-				// get id of created project
-				$reg_project_id = mysqli_fetch_assoc($result)['id']; 
+		// 	$result = mysqli_query($conn, $sql);
+		// 	if (mysqli_num_rows($result) > 0) {
+		// 		// get id of created project
+		// 		$reg_project_id = mysqli_fetch_assoc($result)['id']; 
 
-				// put logged in project into session array
-				$_SESSION['project'] = getProjectById($reg_project_id); 
+		// 		// put logged in project into session array
+		// 		$_SESSION['project'] = getProjectById($reg_project_id); 
 
 				
-				if ( ($_SESSION['project'])) {
-					$_SESSION['message'] = "You are now logged in";
-					// redirect to public area
-					header('location: index.php');				
-					exit(0);
-				}
-			} else {
-				array_push($errors, 'Wrong credentials');
-			}
-		}
-	}
+		// 		if ( ($_SESSION['project'])) {
+		// 			$_SESSION['message'] = "You are now logged in";
+		// 			// redirect to public area
+		// 			header('location: index.php');				
+		// 			exit(0);
+		// 		}
+		// 	} else {
+		// 		array_push($errors, 'Wrong credentials');
+		// 	}
+		// }
+
+	 }
+
 	// escape value from form
 	function esc(String $value)
 	{	
@@ -95,4 +101,6 @@
 		
 		return $project; 
 	}
+
+	
 ?>
