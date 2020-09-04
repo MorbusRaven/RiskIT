@@ -1,33 +1,29 @@
 <?php require_once('config.php') ?>
-<?php 
- 
+<?php
+
+// Check if the user is logged in, if not then redirect him to login page
 
 ?>
 
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
     <title>Project Creation</title>
+    <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-    <html>
-    <head>
-        <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
 <body>
+<?php include( ROOT_PATH . '/includes/navbar.php') ?>
 
-        <?php include( ROOT_PATH . '/includes/navbar.php') ?>
-
-
-
-
-        <div class="container-fluid">
-            <div class="logged_in_info">
-                <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
-
-                <span><a href="logout.php">logout</a></span>
-            </div>
-
+<div class="container-fluid">
+    <div class="logged_in_info">
+        <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
+        |
+        <span><a href="logout.php">logout</a></span>
+    </div>
     <h2 class="text-center mt-5">Project Create</h2>
     <h3 class="text-center mb-3">Create a Project</h3>
 
@@ -58,20 +54,14 @@
         </div>
 
         <div>
-            <input type="submit" name="add" id="add" class="btn btn-success" value="Invite stakeholders" />
+            <input type="submit" name="add" id="add" class="btn btn-success" value="Submit" />
         </div>
     </form>
 
     <div id="table_data" style="text-align: center; padding: 50px 0;"></div>
 
     <!-- footer -->
-    <footer class="footer fixed-bottom" >
-        <div >
-            <p class="mb-0">RiskAssistant &copy; 2020 by Christos Dileris</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap js files -->
+    <?php include( ROOT_PATH . '/includes/footer.php') ?>
     <!-- // footer -->
 </body>
 
@@ -152,4 +142,4 @@
             return false;
         });
     });
-</script></script>
+</script>

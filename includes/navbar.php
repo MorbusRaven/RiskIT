@@ -10,7 +10,8 @@
 				<li class="nav-item mr-4"><a class="nav-link" href="RiskTable.php">Risk Table</a></li>
 				<li class="nav-item mr-4"><a class="nav-link" href="RoundTable.php">Estimations</a></li>
 				<li class="nav-item mr-4"><a class="nav-link" href="mitigationStrategy.php">Mitigation Strategies</a></li>
-				<li class="nav-item mr-4"><a class="nav-link" href="avgEstimation.php">Average Estimations</a></li>	
+				<li class="nav-item mr-4"><a class="nav-link" href="avgEstimation.php">Average Estimations</a></li>
+				<li class="nav-item mr-0"><a class="nav-link" href="discussionTable.php">Discussion Table</a></li>	
 			</ul>
 		</div>
 	</div>

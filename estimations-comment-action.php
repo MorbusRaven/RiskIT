@@ -8,13 +8,13 @@ $post_id = $_GET['post_id'];
 
 $comment = $_POST['comment'];
 
-$user_name = $_POST['user_name'];
+$fullname = $_SESSION['user']['fullname'];
 
-$comment = $conn->query("INSERT INTO estimations_comments (post_id, user_name, user_comment) VALUES ($post_id, '$user_name', '$comment')");
+$comment = $conn->query("INSERT INTO estimationcomments (post_id, fullname, user_comment) VALUES ($post_id, '$fullname', '$comment')");
 
 if ($comment) {
 
-header("Location: estimations-view-post.php?post_id=$post_id");
+header("Location: view-user.php?post_id=$post_id");
 
 } else {
 

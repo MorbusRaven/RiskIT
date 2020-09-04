@@ -7,9 +7,9 @@ if (isset($_GET['post_id'])) {
 
 $id = $_GET['post_id'];
 
-$mitspost = $conn->query("SELECT * FROM mitigationstratposts WHERE post_id = $id");
+$estpost = $conn->query("SELECT * FROM estimationposts WHERE post_id = $id");
 
-$post_data = $mitspost->fetch_assoc();
+$post_data = $estpost->fetch_assoc();
 
 } else {
 
@@ -39,7 +39,7 @@ header("Location: index.php");
 <?php include( ROOT_PATH . '/includes/navbar.php') ?>
 <div class="body">
 
-<a href="mitigationStrategy.php">Mitigation Strategies</a> | <b><?php echo $post_data['username'] ?></b>
+<a href="RoundTable.php">Estimations</a> | <b><?php echo $post_data['username'] ?></b>
 
 </div>
 
@@ -57,15 +57,15 @@ header("Location: index.php");
 
 <?php
 
-$mitscomments = $conn->query("SELECT * FROM mitigationstratcomments WHERE post_id = $id");
+$estcomments = $conn->query("SELECT * FROM estcomments WHERE post_id = $id");
 
 ?>
 
-<b><?php echo $mitscomments->num_rows ?></b> Total comments<br><br>
+<b><?php echo $estcomments->num_rows ?></b> Total comments<br><br>
 
 <?php
 
-while ($comment_data = $mitscomments->fetch_assoc()) { ?>
+while ($comment_data = $estcomments->fetch_assoc()) { ?>
 
 <div class="post-panel">
 

@@ -50,13 +50,11 @@
 			// put logged in user into session array
 			$_SESSION['user'] = getUserById($reg_user_id);
 
-			// if user is admin, redirect to admin area
-			
 				$_SESSION['message'] = "You are now logged in";
 				// redirect to public area
 				header('location: index.php');				
 				exit(0);
-			
+
 		}
 	}
 
@@ -64,6 +62,11 @@
 	if (isset($_POST['login_btn'])) {
 		$username = esc($_POST['username']);
 		$password = esc($_POST['password']);
+
+		$_SESSION["loggedin"] = true;
+        $_SESSION["id"] = $id;
+        $_SESSION["username"] = $username;
+        $_SESSION["fullname"] = $fullname;
 
 		if (empty($username)) { array_push($errors, "Username required"); }
 		if (empty($password)) { array_push($errors, "Password required"); }
@@ -79,13 +82,8 @@
 				// put logged in user into session array
 				$_SESSION['user'] = getUserById($reg_user_id); 
 
-				// if user is admin, redirect to admin area
-				if ( in_array($_SESSION['user']['role'], ["Admin", "Author"])) {
-					$_SESSION['message'] = "You are now logged in";
-					// redirect to admin area
-					header('location: ' . BASE_URL . '/admin/dashboard.php');
-					exit(0);
-				} else {
+				
+				if ( ($_SESSION['user'])) {
 					$_SESSION['message'] = "You are now logged in";
 					// redirect to public area
 					header('location: index.php');				

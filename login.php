@@ -17,18 +17,6 @@ include('includes/head_section.php'); ?>
 						<?php include(ROOT_PATH . '/includes/errors.php') ?>
 					<div class="form-group">
 						<input type="text" name="username" value="<?php echo $username; ?>" value="" placeholder="Username">
-						<input type="password" name="password" placeholder="Password">
-						<select  class="custom-select" name="projectname" >
-								<option value="">Select a Project</option>
-										<?php
-										$query = "SELECT projectname FROM project";
-										$data = $connect->prepare($query);    
-										$data->execute();
-										while($row=$data->fetch(PDO::FETCH_ASSOC)){
-												echo '<option value="'.$row['id'].'">'.$row['projectname'].'</option>'; 
-										}
-										?>
-						</select>
 						<button type="submit" class="btn" name="login_btn">Login</button>
 						<p>Not yet a member? <a href="register.php">Sign up</a></p>
 					</div>

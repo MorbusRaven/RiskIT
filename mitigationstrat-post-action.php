@@ -2,17 +2,17 @@
 
 include ("config.php");
 
-if (isset($_POST['post'])) {
+if (isset($_POST['user'])) {
 
 $post_msg = $_POST['post_msg'];
 
-$post_name = $_GET['post_name'];
+$username = $_GET['username'];
 
-$post = $conn->query("INSERT INTO mitigation_strat_posts (post_name, post_msg) VALUES ('$post_name', '$post_msg')");
+$post = $conn->query("INSERT INTO mitigationstratposts (username, post_msg) VALUES ('$username', '$post_msg')");
 
 if ($post) {
 
-header("Location: mitigationStrategy.php?mitigationstrat-post-action=posted");
+header("Location: mitigationStrategy.php?post_action=posted");
 
 } else {
 

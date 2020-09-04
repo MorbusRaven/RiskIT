@@ -26,7 +26,7 @@ else
 if($error == '')
 {
  $query = "
- INSERT INTO mitigation_strat_comments 
+ INSERT INTO mitigationstratcomments 
  (parent_comment_id, comment, comment_sender_name) 
  VALUES (:parent_comment_id, :comment, :comment_sender_name)
  ";

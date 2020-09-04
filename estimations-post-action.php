@@ -2,22 +2,17 @@
 
 include ("config.php");
 
-if (isset($_POST['post'])) {
+if (isset($_POST['user'])) {
 
 $post_msg = $_POST['post_msg'];
-$post_name = $_POST['post_name'];
-$impact = $_POST['impact'];
-$probability = $_POST['probability'];
-$riskName = $_POST['riskName'];
-$description = $_POST['description'];
 
+$username = $_POST['username'];
 
-
-$post = $conn->query("INSERT INTO roundtable (post_name, post_msg, impact, probability, riskName, 'description') VALUES ('$post_name', '$post_msg', '$impact', '$probability', '$riskName', '$description')");
+$post = $conn->query("INSERT INTO estimationposts (username, post_msg) VALUES ('$username', '$post_msg')");
 
 if ($post) {
 
-header("Location: RoundTable.php?post_action=posted");
+header("Location: mitigationStrategy.php?post_action=posted");
 
 } else {
 

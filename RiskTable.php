@@ -2,11 +2,10 @@
 <?php 
  
 // Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] !== true) {
+if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == true) {
     header("location: login.php");
     exit;
 }
-
 ?>
 <?php
     $connect = new PDO("mysql:host=localhost;dbname=riskit", "root", "");
@@ -33,7 +32,7 @@ if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] !== true) {
                <div class="container-fluid">
     <div class="logged_in_info">
         <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
-        |
+
         <span><a href="logout.php">logout</a></span>
     </div>
                     
