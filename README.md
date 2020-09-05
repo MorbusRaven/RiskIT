@@ -17,4 +17,4 @@ Done List:
 2.Created project_stakeholders(adding stakeholders to a project)/(still has issues)
 
 
-Files exept includes are of no importance
+Folders except includes are of no importance
