@@ -7,8 +7,14 @@ To do List:
 2. Fix login issues(user registers,credentials are wrong)
 3. Add risk id in mitigation strategies
 4. Make estimations and mitigation strategies as theads. 
-5. Add more on the to do list if needed.
+5. Fix Average Estimations to find avg and display it.
+6. Add more to do in the To Do List.
 
-Fixed database(riskit final)
+
+
+Done List:
+1.Fixed database(riskit final)
+2.Created project_stakeholders(adding stakeholders to a project)/(still has issues)
+
 
 Files exept includes are of no importance
