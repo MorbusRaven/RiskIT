@@ -8,3 +8,6 @@ To do List:
 3. Add risk id in mitigation strategies
 4. Make estimations and mitigation strategies as theads. 
 5. Add more on the to do list if needed.
+
+Fixed database(riskit final)
+
