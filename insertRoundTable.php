@@ -1,5 +1,4 @@
-<?php /** @noinspection ALL */
-/** @noinspection ALL */
+<?php
 
 $connect = new PDO ("mysql:host=localhost;dbname=riskit","root","");
 
@@ -18,16 +17,16 @@ VALUES (:riskName, :impact, :probability,:post_msg)
 
 $statement = $connect->prepare($query);
 
-if ($post) {
+if($statement->execute($data))
+{
+    $output = array(
+        'riskName' => $_POST['riskName'],
+        'impact' => $_POST['impact'],
+        'probability' => $_POST['probability'],
+        'post_msg' => $_POST['post_msg']
+    );
 
-    header("Location: RoundTable.php?estimations-post_action=posted");
-
-} else {
-
-    echo $conn->error;
-
+    echo json_encode($output);
 }
 
-
-
-
+?>
