@@ -1,25 +1,28 @@
-<?php
+<?php /** @noinspection ALL */
 
 include ("config.php");
 
 if (isset($_POST['user'])) {
 
-$post_msg = $_POST['post_msg'];
+    $post_msg = $_POST['post_msg'];
+    $riskName = $_POST['riskName'];
+    $impact = $_POST['impact'];
+    $probability = $_POST['probability'];
 
-$username = $_POST['username'];
 
-$post = $conn->query("INSERT INTO estimationposts (username, post_msg) VALUES ('$username', '$post_msg')");
 
-if ($post) {
 
-header("Location: mitigationStrategy.php?post_action=posted");
+    $post = $conn->query("INSERT INTO estimations (post_msg, impact, probability) VALUES ('$riskName', '$post_msg', '$impact', '$probability')");
 
-} else {
+    if ($post) {
 
-echo $conn->error;
+        header("Location: RoundTable.php?post_action=posted");
+
+    } else {
+
+        echo $conn->error;
+
+    }
 
 }
 
-}
-
-?>

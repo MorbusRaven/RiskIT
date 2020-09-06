@@ -1,25 +1,23 @@
-<?php
+<?php /** @noinspection ALL */
 
 include ("config.php");
 
-if (isset($_POST['user'])) {
+if (isset($_POST['post'])) {
 
-$post_msg = $_POST['post_msg'];
+    $post_id = $_POST['post_id'];
+    $post_msg = $_POST['post_msg'];
+    $risk_name = $_GET['risk_name'];
 
-$username = $_GET['username'];
+    $post = $conn->query("INSERT INTO mitigation_strat_posts (post_id, risk_name, post_msg) VALUES ('$post_id','$risk_name', '$post_msg')");
 
-$post = $conn->query("INSERT INTO mitigationstratposts (username, post_msg) VALUES ('$username', '$post_msg')");
+    if ($post) {
 
-if ($post) {
+        header("Location: mitigationStrategy.php?mitigationstrat-post-action=posted");
 
-header("Location: mitigationStrategy.php?post_action=posted");
+    } else {
 
-} else {
+        echo $conn->error;
 
-echo $conn->error;
-
+    }
 }
 
-}
-
-?>

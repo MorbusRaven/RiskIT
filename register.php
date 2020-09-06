@@ -1,4 +1,7 @@
-<?php  include('config.php'); ?>
+<?php /** @noinspection ALL */
+/** @noinspection ALL */
+/** @noinspection ALL */
+include('config.php'); ?>
 <!-- Source code for handling registration and login -->
 <?php  include('includes/registration_login.php'); ?>
 

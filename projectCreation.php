@@ -55,6 +55,10 @@
 
         <div>
             <input type="submit" name="add" id="add" class="btn btn-success" value="Submit" />
+            <p>
+                 <a href="projectStakeholders.php">Add stakeholders</a>
+            </p>
+
         </div>
     </form>
 

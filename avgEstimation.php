@@ -1,5 +1,4 @@
-
-<?php require_once('config.php') ?>
+/** @noinspection ALL */<?php require_once('config.php') ?>
 <?php 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == true) {

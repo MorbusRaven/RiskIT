@@ -1,19 +1,22 @@
-<?php
+<?php /** @noinspection ALL */
+/** @noinspection ALL */
+/** @noinspection ALL */
+/** @noinspection ALL */
 
 
 include ("config.php");
 
 if (isset($_GET['post_id'])) {
 
-$id = $_GET['post_id'];
+    $id = $_GET['post_id'];
 
-$estimations_posts = $conn->query("SELECT * FROM roundtable WHERE post_id = $id");
+    $estimations_posts = $conn->query("SELECT * FROM estimations WHERE post_id = $id");
 
-$post_data = $estimations_posts->fetch_assoc();
+    $post_data = $estimations_posts->fetch_assoc();
 
 } else {
 
-header("Location: index.php");
+    header("Location: index.php");
 
 }
 
@@ -24,82 +27,82 @@ header("Location: index.php");
 <html>
 
 <head>
-<?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
+    <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
 
 
-<title><?php echo $post_data['post_name'] ?>Status Update</title>
+    <title><?php echo $post_data['post_name'] ?>Status Update</title>
 
-<link rel="stylesheet" type="text/css" href="public_styling.css">
+    <link rel="stylesheet" type="text/css" href="public_styling.css">
 
 </head>
 
- 
+
 
 <body>
 <?php include( ROOT_PATH . '/includes/navbar.php') ?>
 <div class="body">
 
-<a href="RoundTable.php">Estimations</a> | <b><?php echo $post_data['post_name'] ?></b>
+    <a href="RoundTable.php">Estimations</a> | <b><?php echo $post_data['post_name'] ?></b>
 
 </div>
 
 <div class="body">
 
-<div class="post-panel">
+    <div class="post-panel">
 
-<div class="post-body" style="border: none;">
+        <div class="post-body" style="border: none;">
 
-<?php echo $post_data['post_msg'] ?>
+            <?php echo $post_data['post_msg'] ?>
 
-</div>
+        </div>
 
-<div class="post-footer">
+        <div class="post-footer">
 
-<?php
+            <?php
 
-$estimations_comments = $conn->query("SELECT * FROM estimations_comments WHERE post_id = $id");
+            $estimations_comments = $conn->query("SELECT * FROM estimations_comments WHERE post_id = $id");
 
-?>
+            ?>
 
-<b><?php echo $estimations_comments->num_rows ?></b> Total comments<br><br>
+            <b><?php echo $estimations_comments->num_rows ?></b> Total comments<br><br>
 
-<?php
+            <?php
 
-while ($comment_data = $estimations_comments->fetch_assoc()) { ?>
+            while ($comment_data = $estimations_comments->fetch_assoc()) { ?>
 
-<div class="post-panel">
+                <div class="post-panel">
 
-<div class="post-header">
+                    <div class="post-header">
 
-<b><?php echo $comment_data['username'] ?></b>
+                        <b><?php echo $comment_data['username'] ?></b>
 
-</div>
+                    </div>
 
-<div class="post-body">
+                    <div class="post-body">
 
-<?php echo $comment_data['user_comment'] ?>
+                        <?php echo $comment_data['user_comment'] ?>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-<?php }
+            <?php }
 
-?>
+            ?>
 
-<form method="post" action="estimations-comment-action.php?post_id=<?php echo $id ?>">
+            <form method="post" action="estimations-comment-action.php?post_id=<?php echo $id ?>">
 
-<label>Quick Comment:</label><br>
+                <label>Quick Comment:</label><br>
 
-<textarea name="comment" required></textarea><br>
-<?php echo  $_SESSION['username']; ?>
-<input type="submit" name="post_comment" />
+                <textarea name="comment" required></textarea><br>
+                <?php echo  $_SESSION['username']; ?>
+                <input type="submit" name="post_comment" />
 
-</form>
+            </form>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </div>
 

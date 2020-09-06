@@ -2,7 +2,7 @@
 <?php 
  
 // Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == true) {
+if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == !true) {
     header("location: login.php");
     exit;
 }
@@ -110,7 +110,7 @@ if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == true) {
                             <tr>
                                 <th scope="col">Risk Name</th>
                                 <th scope="col"> Description</th>
-                                <th scope="col">Contol Enviroment</th>
+                                <th scope="col">Control Environment</th>
                                 <th scope="col">Risk Category</th>
                                 <th scope="col">Risk Type</th>
                                 <th scope="col">Phase</th>
@@ -167,7 +167,6 @@ $(document).ready(function(){
      html += '<td>'+data.controlEnv+'</td>';
      html += '<td>'+data.riskCat+'</td>';
      html += '<td>'+data.rtype+'</td>';
-     html += '<td>'+data.phase+'</td>';
      html += '<td>'+data.fullname+'</td></tr>';
      $('#table_data').prepend(html);
      $('#add_details')[0].reset();

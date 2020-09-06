@@ -1,5 +1,13 @@
 <?php
 
+$riskName = "";
+$description = "";
+$controlEnv = "";
+$riskCat = "";
+$rtype = "";
+$phase = "";
+$fullname = "";
+
 $connect = new PDO ("mysql:host=localhost;dbname=riskit","root","");
 
 $data = array(
@@ -12,11 +20,11 @@ $data = array(
  ':fullname'  => $_POST["fullname"]
 ); 
 
-$query = "
+$query = '
  INSERT INTO risktable 
 (riskName, description, controlEnv, riskCat, rtype, phase, fullname) 
 VALUES (:riskName, :description, :controlEnv, :riskCat, :rtype, :phase, :fullname)
-";
+';
 
 $statement = $connect->prepare($query);
 
@@ -35,4 +43,3 @@ if($statement->execute($data))
  echo json_encode($output);
 }
 
-?>

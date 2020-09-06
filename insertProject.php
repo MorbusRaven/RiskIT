@@ -1,5 +1,5 @@
-<?php 
-	// ini_set('error_reporting', E_ALL);
+<?php /** @noinspection ALL */
+// ini_set('error_reporting', E_ALL);
 	// error_reporting(E_ALL);
 	// error_reporting(-1);
 
@@ -103,4 +103,3 @@
 	}
 
 	
-?>

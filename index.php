@@ -1,126 +1,127 @@
-<?php require_once('config.php') ?>
+<?php /** @noinspection ALL */
+require_once('config.php') ?>
 
 <?php require_once( ROOT_PATH . '/includes/registration_login.php') ?>
 <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
-	<title>Risk Assistant | Home </title>
+<title>Risk Assistant | Home </title>
 </head>
 <body>
-	<!-- container - wraps whole page -->
-	
-		<!-- navbar -->
-		<?php include( ROOT_PATH . '/includes/navbar.php') ?>
-		<!-- // navbar -->
-		<div class="container-fluid">
-			<!-- banner -->
-			<?php include( ROOT_PATH . '/includes/banner.php') ?>
-			<!-- // banner -->
+<!-- container - wraps whole page -->
 
-			<!-- Page content -->
-			<?php
+<!-- navbar -->
+<?php include( ROOT_PATH . '/includes/navbar.php') ?>
+<!-- // navbar -->
+<div class="container-fluid">
+    <!-- banner -->
+    <?php include( ROOT_PATH . '/includes/banner.php') ?>
+    <!-- // banner -->
 
-$estimations_posts = $conn->query("SELECT * FROM roundtable ORDER BY post_id DESC");
-$mitigation_strat_posts = $conn->query("SELECT * FROM mitigation_strat_posts ORDER BY post_id DESC");
-?>
+    <!-- Page content -->
+    <?php
 
-<div class="body">
+    $estimations_posts = $conn->query("SELECT * FROM estimations ORDER BY post_id DESC");
+    $mitigation_strat_posts = $conn->query("SELECT * FROM mitigation_strat_posts ORDER BY post_id DESC");
+    ?>
 
-<b><?php echo $estimations_posts ->num_rows ?></b> Τotal Estimations
-</div>
-<div class="body">
-	<?php
+    <div class="body">
 
-if ($estimations_posts->num_rows == null) {
+        <b><?php echo $estimations_posts ->num_rows ?></b> Τotal Estimations
+    </div>
+    <div class="body">
+        <?php
 
-echo 'Νo posts yet';
+        if ($estimations_posts->num_rows == null) {
 
-} else if ($estimations_posts->num_rows != null) {
+            echo 'Νo posts yet';
 
-while ($post_data = $estimations_posts->fetch_assoc()) { ?>
+        } else if ($estimations_posts->num_rows != null) {
 
-<div class="post-panel">
+            while ($post_data = $estimations_posts->fetch_assoc()) { ?>
 
-<div class="post-header">
+                <div class="post-panel">
 
-<b><?php echo $post_data['post_name'] ?></b>
+                    <div class="post-header">
 
-</div>
+                        <b><?php echo $post_data['post_name'] ?></b>
 
-<div class="post-body">
+                    </div>
 
-<?php echo $post_data['post_msg'] ?>
+                    <div class="post-body">
 
-</div>
+                        <?php echo $post_data['post_msg'] ?>
 
-<?php
+                    </div>
 
-$estimations_posts = $conn->query("SELECT * FROM roundtable WHERE post_id = ".$post_data['post_id']."");
+                    <?php
 
-?>
+                    $estimations_posts = $conn->query("SELECT * FROM estimations WHERE post_id = ".$post_data['post_id']."");
 
-<div class="post-footer">
+                    ?>
 
-<a href="estimations-view-posts.php?post_id=<?php echo $post_data['post_id'] ?>">Comment (<?php echo $estimations_posts->num_rows ?>)</a>
+                    <div class="post-footer">
 
-</div>
+                        <a href="estimations-view-posts.php?post_id=<?php echo $post_data['post_id'] ?>">Comment (<?php echo $estimations_posts->num_rows ?>)</a>
 
-</div>
+                    </div>
 
-<?php }
+                </div>
 
-}
+            <?php }
 
-?>
+        }
 
-</br>
-<b><?php echo $mitigation_strat_posts->num_rows ?></b> Τotal Mitigation Strategies
-</div>
-<div class="body" style="padding-bottom: 1px;">
+        ?>
 
-<?php
+        </br>
+        <b><?php echo $mitigation_strat_posts->num_rows ?></b> Τotal Mitigation Strategies
+    </div>
+    <div class="body" style="padding-bottom: 1px;">
 
-if ($mitigation_strat_posts->num_rows == null) {
+        <?php
 
-echo 'Νo posts yet';
+        if ($mitigation_strat_posts->num_rows == null) {
 
-} else if ($mitigation_strat_posts->num_rows != null) {
+            echo 'Νo posts yet';
 
-while ($post_data = $mitigation_strat_posts->fetch_assoc()) { ?>
+        } else if ($mitigation_strat_posts->num_rows != null) {
 
-<div class="post-panel">
+            while ($post_data = $mitigation_strat_posts->fetch_assoc()) { ?>
 
-<div class="post-header">
+                <div class="post-panel">
 
-<b><?php echo $post_data['post_name'] ?></b>
+                    <div class="post-header">
 
-</div>
+                        <b><?php echo $post_data['post_name'] ?></b>
 
-<div class="post-body">
+                    </div>
 
-<?php echo $post_data['post_msg'] ?>
+                    <div class="post-body">
 
-</div>
+                        <?php echo $post_data['post_msg'] ?>
 
-<?php
+                    </div>
 
-$mitigation_strat_posts = $conn->query("SELECT * FROM mitigation_strat_comments WHERE post_id = ".$post_data['post_id']."");
+                    <?php
 
-?>
+                    $mitigation_strat_posts = $conn->query("SELECT * FROM mitigation_strat_comments WHERE post_id = ".$post_data['post_id']."");
 
-<div class="post-footer">
+                    ?>
 
-<a href="mitigationstrat-view-post.php?post_id=<?php echo $post_data['post_id'] ?>">Comment (<?php echo $mitigation_strat_posts->num_rows ?>)</a>
+                    <div class="post-footer">
 
-</div>
+                        <a href="mitigationstrat-view-post.php?post_id=<?php echo $post_data['post_id'] ?>">Comment (<?php echo $mitigation_strat_posts->num_rows ?>)</a>
 
-</div>
+                    </div>
 
-<?php }
+                </div>
 
-}
+            <?php }
 
-?>
-		<!-- // Page content -->
+        }
 
-		<!-- footer -->
-		<?php include( ROOT_PATH . '/includes/footer.php') ?>
-		<!-- // footer -->
+        ?>
+        <!-- // Page content -->
+
+        <!-- footer -->
+        <?php include( ROOT_PATH . '/includes/footer.php') ?>
+        <!-- // footer -->

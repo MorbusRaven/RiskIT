@@ -1,4 +1,4 @@
-<?php  
+<?php /** @noinspection ALL */
 include('config.php'); 
 include('includes/registration_login.php'); 
 include('includes/head_section.php'); ?>
@@ -17,6 +17,7 @@ include('includes/head_section.php'); ?>
 						<?php include(ROOT_PATH . '/includes/errors.php') ?>
 					<div class="form-group">
 						<input type="text" name="username" value="<?php echo $username; ?>" value="" placeholder="Username">
+                        <input type="password" name="password" placeholder="Password">
 						<button type="submit" class="btn" name="login_btn">Login</button>
 						<p>Not yet a member? <a href="register.php">Sign up</a></p>
 					</div>

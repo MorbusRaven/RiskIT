@@ -14,7 +14,7 @@ if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == true) {
 
 <?php
 $connect = new PDO("mysql:host=localhost;dbname=riskit", "root", "");
-$query = "SELECT * FROM roundtable ORDER BY riskName ";
+$query = "SELECT * FROM estimations ORDER BY riskName ";
 $statement = $connect->prepare($query);
 $statement->execute();
 $result = $statement->fetchAll();
@@ -61,29 +61,29 @@ $result = $statement->fetchAll();
                 <div class="input-group-prepend">
                 <label class="input-group-text p-2 font-weight-bold">Impact</label>
             </div> 
-            <input type="text" name="impact" class="form-control" required />
+            <input type="text" name="impact" id="impact" class="form-control" required />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <label class="input-group-text p-2 font-weight-bold">Probability</label>
             </div>
-            <input type="text" name="probability" class="form-control" required />
+            <input type="text" name="probability" id="probability" class="form-control" required />
             
         </div>
 		<div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text p-2 font-weight-bold">Your Estimation</label>
+                <label class="input-group-text p-2 font-weight-bold">Add An Estimation</label>
             </div>
-			<textarea name="Estimation" class="form-control"  required></textarea><br>
-			<input type="submit" name="post" value="Post" />
-			</form>
-			<?php
-				if (isset($_GET['post_action'])) {
-					if ($_GET['post_action'] == "posted") {
-						echo 'Successfully Posted!';
-					}
-				}
-			?>
+            <textarea name="Estimation" class="form-control"  required class="form-control"></textarea><br>
+            <input type="submit" name="post" value="Post" class="form-control" />
+     </form>
+        <?php
+        if (isset($_GET['estimations-post_action'])) {
+            if ($_GET['estimations-post_action'] == "posted") {
+                echo 'Successfully Posted!';
+            }
+        }
+        ?>
 	
 		
 		</div>
@@ -100,64 +100,14 @@ $result = $statement->fetchAll();
 </html>
 
 <script>
-$(document).ready(function(){
- 
- $('#add_details').on('submit', function(event){
-	event.preventDefault();
-	$.ajax({
-	 url:"insertRoundTable.php",
-	 method:"POST",
-	 data:$(this).serialize(),
-	 dataType:"json",
-	 beforeSend:function(){
-		$('#add').attr('disabled', 'disabled');
-		console.log('before');
-	 },
-	 success:function(data){
-		$('#add').attr('disabled', false);
-		console.log('in success');
-		if(data.riskName)
-		{
-		 var html = '<tr>';
-		 html += '<td>'+data.riskName+'</td>';
-		 html += '<td>'+data.impact+'</td>';
-		 html += '<td>'+data.probability+'</td>';
-		 html += '<td>'+data.exposure+'</td></tr>';
-		 $('#table_data').prepend(html);
-		 $('#add_details')[0].reset();
-		}
-	 }
-	})
- });
- 
-});
+const field1 = document.getElementById("probability");
+const field2 = document.getElementById("impact");
 
+function exposure(){
 
+    const exposure = (parseFloat(field1) / 100) * parseFloat(field2);
+    console.log(exposure);
 
-document.getElementById("add_details").onsubmit = function() {divide()};
-
-	function divide(){
-		var field1=document.getElementById("probability").value;
-		const a=100;
-		var probability=parseInt(field1)/a;
-		multiply(probability);
-		
- 
 }
- 
-function multiply(probability){
- 
-	var field1=document.getElementById("impact").value;
-	var field2=probability;
- 
-	var exposure=parseFloat(field1)*parseFloat(field2);
- 
-	if(!isNaN(exposure)){
 
-		console.log(exposure)
-		document.getElementsByName("exposure").innerHTML=exposure;
-
- 
-	}
-}
 </script>

@@ -1,19 +1,22 @@
-<?php
+<?php /** @noinspection ALL */
+/** @noinspection ALL */
+/** @noinspection ALL */
+/** @noinspection ALL */
 
 
 include ("config.php");
 
 if (isset($_GET['post_id'])) {
 
-$id = $_GET['post_id'];
+    $id = $_GET['post_id'];
 
-$mitspost = $conn->query("SELECT * FROM mitigationstratposts WHERE post_id = $id");
+    $mitigation_strat_posts = $conn->query("SELECT * FROM mitigation_strat_posts WHERE post_id = $id");
 
-$post_data = $mitspost->fetch_assoc();
+    $post_data = $mitigation_strat_posts->fetch_assoc();
 
 } else {
 
-header("Location: index.php");
+    header("Location: index.php");
 
 }
 
@@ -24,82 +27,82 @@ header("Location: index.php");
 <html>
 
 <head>
-<?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
+    <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
 
 
-<title><?php echo $post_data['fullname'] ?>Status Update</title>
+    <title><?php echo $post_data['post_name'] ?>Status Update</title>
 
-<link rel="stylesheet" type="text/css" href="public_styling.css">
+    <link rel="stylesheet" type="text/css" href="public_styling.css">
 
 </head>
 
- 
+
 
 <body>
 <?php include( ROOT_PATH . '/includes/navbar.php') ?>
 <div class="body">
 
-<a href="mitigationStrategy.php">Mitigation Strategies</a> | <b><?php echo $post_data['username'] ?></b>
+    <a href="mitigationStrategy.php">Mitigation Strategies</a> | <b><?php echo $post_data['post_name'] ?></b>
 
 </div>
 
 <div class="body">
 
-<div class="post-panel">
+    <div class="post-panel">
 
-<div class="post-body" style="border: none;">
+        <div class="post-body" style="border: none;">
 
-<?php echo $post_data['post_msg'] ?>
+            <?php echo $post_data['post_msg'] ?>
 
-</div>
+        </div>
 
-<div class="post-footer">
+        <div class="post-footer">
 
-<?php
+            <?php
 
-$mitscomments = $conn->query("SELECT * FROM mitigationstratcomments WHERE post_id = $id");
+            $mitigation_strat_comments = $conn->query("SELECT * FROM mitigation_strat_comments WHERE post_id = $id");
 
-?>
+            ?>
 
-<b><?php echo $mitscomments->num_rows ?></b> Total comments<br><br>
+            <b><?php echo $mitigation_strat_comments->num_rows ?></b> Total comments<br><br>
 
-<?php
+            <?php
 
-while ($comment_data = $mitscomments->fetch_assoc()) { ?>
+            while ($comment_data = $mitigation_strat_comments->fetch_assoc()) { ?>
 
-<div class="post-panel">
+                <div class="post-panel">
 
-<div class="post-header">
+                    <div class="post-header">
 
-<b><?php echo $comment_data['username'] ?></b>
+                        <b><?php echo $comment_data['user_name'] ?></b>
 
-</div>
+                    </div>
 
-<div class="post-body">
+                    <div class="post-body">
 
-<?php echo $comment_data['user_comment'] ?>
+                        <?php echo $comment_data['user_comment'] ?>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-<?php }
+            <?php }
 
-?>
+            ?>
 
-<form method="post" action="comment-action.php?post_id=<?php echo $id ?>">
+            <form method="post" action="mitigationstrat-comment-action.php?post_id=<?php echo $id ?>">
 
-<label>Quick Comment:</label><br>
+                <label>Quick Comment:</label><br>
 
-<textarea name="comment" required></textarea><br>
-<?php echo  $_SESSION['username']; ?>
-<input type="submit" name="post_comment" />
+                <textarea name="comment" required></textarea><br>
+                <?php echo  $_SESSION['username']; ?>
+                <input type="submit" name="post_comment" />
 
-</form>
+            </form>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </div>
 
