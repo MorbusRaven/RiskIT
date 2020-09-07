@@ -1,12 +1,26 @@
-/** @noinspection ALL */<?php require_once('config.php') ?>
-<?php 
+<?php
+require_once('config.php');
+
 // Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == true) {
+if (!isset($_SESSION["loggedin"]) OR $_SESSION["loggedin"] == !true) {
     header("location: login.php");
     exit;
 }
-    
+if (!isset($_SESSION["projectid"]) OR $_SESSION["projectid"] ==0) {
+    header("location:projectCreation.php");
+    exit;
+
+}
 ?>
+
+<?php
+$connect = new PDO("mysql:host=localhost;dbname=riskit", "root", "");
+$query = "SELECT rsk.riskName, rsk.description, avg(est.`impact`) as AvgImpact, avg(est.`probability`) as AvgProbability, avg(est.`exposure`) as AvgExposure FROM `estimations` as est inner join risktable as rsk on est.riskid = rsk.id WHERE rsk.projectid= :SESSION($projectid) group by rsk.riskName, rsk.description";
+$statement = $connect->prepare($query);
+$statement->execute();
+$result = $statement->fetchAll();
+?>
+
 
 
 <html>
@@ -16,12 +30,16 @@ if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == true) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
  <body>
-  <div class="container">
-  <?php include( ROOT_PATH . '/includes/navbar.php') ?>
-  <div class="logged_in_info">
-    <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
-    <span><a href="logout.php">logout</a></span>
-  </div>
+<?php include( ROOT_PATH . '/includes/navbar.php') ?>
+<div class="container-fluid">
+      <div class="logged_in_info">
+          <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
+          <span><a href="logout.php">logout</a></span><br>
+          <span>Project: <?php if ($_SESSION['projectid'] ==0 ){ echo 'Not Set'; } else{ echo $_SESSION['projectname'] ;}?></span>
+          <span><a href="ProjectCreation.php"><?php if ($_SESSION['projectid'] ==0 ){ echo 'Set' ;} else{ echo 'Change';} ?></a></span>
+      </div>
+    <input type="hidden" name = "userid" id="userid" value = "<?php echo $_SESSION['userid'] ?>">
+    <input type="hidden" name = "userid" id="userid" value = "<?php echo $_SESSION['projectid'] ?>">
    <br />
    <br />
    <h2 align="center">Average Estimations</h2>
@@ -37,28 +55,22 @@ if (!isset($_SESSION["loggedin"]) and $_SESSION["loggedin"] == true) {
      </tr>
     </thead>
     <tbody id="table_data">
-      <?php
-      // Attempt select query execution
-$sql = "SELECT * FROM riskavg";
-if($result = mysqli_query($conn, $sql)){
-    if(mysqli_num_rows($result) > 0){
-        while($row = mysqli_fetch_array($result)){
-            echo "<tr>";
-                echo "<td>" . $row['riskName'] . "</td>";
-                echo "<td>" . $row['description'] . "</td>";
-                echo "<td>" . $row['impact'] . "</td>";
-                echo "<td>" . $row['probability'] . "</td>";
-                echo "<td>" . $row['exposure'] . "</td>";
-            echo "</tr>";
+    <?php
+    if(is_array($result)){
+        foreach($result as $row)
+        {
+            echo '<tr>
+								<td>'.$row['riskName'] .'</td>
+								<td>'.$row['description'].'</td>
+								<td>'.$row['impact'].'</td>
+								<td>'.$row['probability'].'</td>
+								<td>'.$row['exposure'].'</td>
+								
+								
+								</tr>';
         }
-        echo "</table>";
-        // Free result set
-        mysqli_free_result($result);
-    } 
-} else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-}
-      ?>
+    }
+    ?>
     </tbody>
    </table>
   </div>

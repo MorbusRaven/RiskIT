@@ -1,5 +1,16 @@
 <?php /** @noinspection ALL */
 include('config.php');
+
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) OR $_SESSION["loggedin"] == !true) {
+    header("location: login.php");
+    exit;
+}
+if (!isset($_SESSION["projectid"]) OR $_SESSION["projectid"] ==0) {
+    header("location:projectCreation.php");
+    exit;
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,9 +21,15 @@ include('config.php');
 </head>
 <body>
 <?php include( ROOT_PATH . '/includes/navbar.php') ?>
+<div class="logged_in_info">
+    <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
+    <span><a href="logout.php">logout</a></span><br>
+    <span>Project: <?php if ($_SESSION['projectid'] ==0 ){ echo 'Not Set'; } else{ echo $_SESSION['projectname'] ;}?></span>
+    <span><a href="ProjectCreation.php"><?php if ($_SESSION['projectid'] ==0 ){ echo 'Set' ;} else{ echo 'Change';} ?></a></span>
+</div>
 <h2>Select User:</h2>
 <div>
-    <form method="POST">
+    <form method="POST" action="projectStakeholders.php">
         <table border="1">
             <thead>
             <th></th>
