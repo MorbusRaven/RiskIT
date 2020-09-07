@@ -3,30 +3,27 @@
 $connect = new PDO ("mysql:host=localhost;dbname=riskit","root","");
 
 $data = array(
-    ':riskName'  => $_POST["riskName"],
+    ':riskid'  => $_POST["riskid"],
     ':impact'  => $_POST["impact"],
     ':probability'  => $_POST["probability"],
-    ':post_msg' => $_POST["post_msg"]
+    ':description' => $_POST["description"],
+    ':userid' => $_POST["userid"]
+
 );
 
-$query = "
-INSERT INTO roundtable
-(riskName, impact, probability,post_msg) 
-VALUES (:riskName, :impact, :probability,:post_msg)
-";
+$query = "INSERT INTO estimations
+(`description`, `impact`, `probability`, `exposure`, `riskId`, `userId`) 
+VALUES (:description, :impact, :probability, ((:probability/100)*:impact), :riskid, :userid)";
 
 $statement = $connect->prepare($query);
 
 if($statement->execute($data))
 {
-    $output = array(
-        'riskName' => $_POST['riskName'],
-        'impact' => $_POST['impact'],
-        'probability' => $_POST['probability'],
-        'post_msg' => $_POST['post_msg']
-    );
+    header("Location: RoundTable.php?estimations-post_action=posted");
 
-    echo json_encode($output);
 }
+else {
 
-?>
+    print_r($connect->errorInfo());
+
+}

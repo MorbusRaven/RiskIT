@@ -1,4 +1,4 @@
-<?php /** @noinspection ALL */
+<?php
 require_once('config.php') ?>
 
 <?php require_once( ROOT_PATH . '/includes/registration_login.php') ?>
@@ -17,109 +17,7 @@ require_once('config.php') ?>
     <!-- // banner -->
 
     <!-- Page content -->
-    <?php
-
-    $estimations_posts = $conn->query("SELECT * FROM estimations ORDER BY post_id DESC");
-    $mitigation_strat_posts = $conn->query("SELECT * FROM mitigation_strat_posts ORDER BY post_id DESC");
-    ?>
-
-    <div class="body">
-
-        <b><?php echo $estimations_posts ->num_rows ?></b> Τotal Estimations
-    </div>
-    <div class="body">
-        <?php
-
-        if ($estimations_posts->num_rows == null) {
-
-            echo 'Νo posts yet';
-
-        } else if ($estimations_posts->num_rows != null) {
-
-            while ($post_data = $estimations_posts->fetch_assoc()) { ?>
-
-                <div class="post-panel">
-
-                    <div class="post-header">
-
-                        <b><?php echo $post_data['post_name'] ?></b>
-
-                    </div>
-
-                    <div class="post-body">
-
-                        <?php echo $post_data['post_msg'] ?>
-
-                    </div>
-
-                    <?php
-
-                    $estimations_posts = $conn->query("SELECT * FROM estimations WHERE post_id = ".$post_data['post_id']."");
-
-                    ?>
-
-                    <div class="post-footer">
-
-                        <a href="estimations-view-posts.php?post_id=<?php echo $post_data['post_id'] ?>">Comment (<?php echo $estimations_posts->num_rows ?>)</a>
-
-                    </div>
-
-                </div>
-
-            <?php }
-
-        }
-
-        ?>
-
-        </br>
-        <b><?php echo $mitigation_strat_posts->num_rows ?></b> Τotal Mitigation Strategies
-    </div>
-    <div class="body" style="padding-bottom: 1px;">
-
-        <?php
-
-        if ($mitigation_strat_posts->num_rows == null) {
-
-            echo 'Νo posts yet';
-
-        } else if ($mitigation_strat_posts->num_rows != null) {
-
-            while ($post_data = $mitigation_strat_posts->fetch_assoc()) { ?>
-
-                <div class="post-panel">
-
-                    <div class="post-header">
-
-                        <b><?php echo $post_data['post_name'] ?></b>
-
-                    </div>
-
-                    <div class="post-body">
-
-                        <?php echo $post_data['post_msg'] ?>
-
-                    </div>
-
-                    <?php
-
-                    $mitigation_strat_posts = $conn->query("SELECT * FROM mitigation_strat_comments WHERE post_id = ".$post_data['post_id']."");
-
-                    ?>
-
-                    <div class="post-footer">
-
-                        <a href="mitigationstrat-view-post.php?post_id=<?php echo $post_data['post_id'] ?>">Comment (<?php echo $mitigation_strat_posts->num_rows ?>)</a>
-
-                    </div>
-
-                </div>
-
-            <?php }
-
-        }
-
-        ?>
+        Coming Soon!!
         <!-- // Page content -->
 
         <!-- footer -->

@@ -1,4 +1,4 @@
-<?php /** @noinspection ALL */
+<?php
 
 include 'config.php';
 
@@ -8,19 +8,17 @@ if (isset($_POST['post_comment'])) {
 
     $comment = $_POST['comment'];
 
-    $fullname = $_GET['fullname'];
+    $uname = $_POST['uname'];
 
-    $comment = $conn->query("INSERT INTO comments (post_id, fullname, user_comment) VALUES ($post_id, '$fullname', '$comment')");
+    $comment = $mysqli->query("INSERT INTO miitigationstrat_comments (post_id, user_name, user_comment) VALUES ($post_id, '$uname', '$comment')");
 
     if ($comment) {
 
-        header("Location: mitigationstrat-view-post.php?post_id=$post_id");
+        header("Location: view-post.php?post_id=$post_id");
 
     } else {
 
-        echo $conn->error;
-
+        echo $mysqli->error;
     }
-
 }
 

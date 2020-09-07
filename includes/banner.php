@@ -1,8 +1,12 @@
-<?php if (isset($_SESSION['user']['username'])) { ?>
+<?php /** @noinspection ALL */
+if (isset($_SESSION['user']['username'])) { ?>
 	<div class="logged_in_info">
-		<span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
-		|
-		<span><a href="logout.php">logout</a></span>
+        <div class="logged_in_info">
+            <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
+            <span><a href="logout.php">logout</a></span><br>
+            <span>Project: <?php if ($_SESSION['projectid'] ==0 ){ echo 'Not Set'; } else{ echo $_SESSION['projectname'] ;}?></span>
+            <span><a href="ProjectCreation.php"><?php if ($_SESSION['projectid'] ==0 ){ echo 'Set' ;} else{ echo 'Change';} ?></a></span>
+        </div>
 	</div>
 <?php }else{ ?>
 	<div class="banner">

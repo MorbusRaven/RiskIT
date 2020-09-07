@@ -2,7 +2,33 @@
 <?php
 
 // Check if the user is logged in, if not then redirect him to login page
-
+if (!isset($_SESSION["loggedin"]) OR $_SESSION["loggedin"] == !true) {
+    header("location: login.php");
+    exit;
+}
+?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // collect value of input field
+    $projectid = $_POST['projectid'];
+    if (!empty($projectid)) {
+        $_SESSION['projectid'] = $_POST['projectid'];
+        $connect = new PDO("mysql:host=localhost;dbname=riskit", "root", "");
+        $query = "SELECT `projectname` FROM `projects` where id = :projectid limit 1";
+        $statement = $connect->prepare($query);
+        $params = array('projectid'=>$projectid);
+        $statement->execute($params);
+        $result = $statement->fetch();
+        $_SESSION['projectname'] = $result['projectname'];
+    }
+}
+?>
+<?php
+$connect = new PDO("mysql:host=localhost;dbname=riskit", "root", "");
+$query = "SELECT `projectname`, `clientname`, `description`, `created_at`, `id` FROM `projects` ";
+$statement = $connect->prepare($query);
+$statement->execute();
+$result = $statement->fetchAll();
 ?>
 
 
@@ -20,11 +46,55 @@
 
 <div class="container-fluid">
     <div class="logged_in_info">
-        <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>
-        |
-        <span><a href="logout.php">logout</a></span>
+        <span>Welcome <?php echo $_SESSION['user']['username'] ?></span>|<span><a href="logout.php">logout</a></span><br>
+        <span>Project:<?php if (!isset($_SESSION["projectid"]) OR $_SESSION['projectid'] ==0 ){ echo 'Not Set'; } else{ echo $_SESSION['projectname'] ;}?></span>
     </div>
-    <h2 class="text-center mt-5">Project Create</h2>
+    <h2 class="text-center mt-5">Project Selection/Creation</h2>
+    <h3  class="text-center mb-3">Select an existing project </h3>
+    <table class="table table-striped table-bordered mb-5">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Project Id</th>
+            <th scope="col">Project Name</th>
+            <th scope="col">Client Name</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Desciption</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        if(is_array($result)){
+            foreach($result as $row)
+            {
+                echo '<tr>
+					<td>'.$row["id"].'</td>
+					<td>'.$row["projectname"].'</td>
+					<td>'.$row["clientname"].'</td>
+					<td>'.$row["created_at"].'</td>
+					<td>'.$row["description"].'</td>
+					</tr>';
+            }
+        }
+        ?>
+        </tbody>
+    </table>
+    <form method ="post" action="<?php echo $_SERVER['PHP_SELF'];?>" class = "form-size" id="select_project">
+        <select  class="custom-select" name="projectid" id="projectid" >
+            <?php
+									if(is_array($result)){
+            foreach($result as $row)
+            {
+
+            echo '<option value="'.$row['id'].'">'.$row['projectname'].'</option>';
+            }
+									}
+								?>
+        </select>
+        <input type="submit" name="select" id="select" class="btn btn-success" value="Select Project" />
+
+    </form>
+    <p><p>
+
     <h3 class="text-center mb-3">Create a Project</h3>
 
     <form method="post" class="form-size" id="add_details">
@@ -56,7 +126,7 @@
         <div>
             <input type="submit" name="add" id="add" class="btn btn-success" value="Submit" />
             <p>
-                 <a href="projectStakeholders.php">Add stakeholders</a>
+                <a href="projectStakeholders.php">Add stakeholders</a>
             </p>
 
         </div>
