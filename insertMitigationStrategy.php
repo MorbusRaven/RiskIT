@@ -20,8 +20,4 @@ if($statement->execute($data))
     header("Location: MitigationStrategies.php?mitigationstrat-post_action=posted");
 
 }
-else {
 
-    print_r($connect->errorInfo());
-
-}
